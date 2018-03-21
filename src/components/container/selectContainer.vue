@@ -374,7 +374,7 @@ export default {
                 let _this=this;
                 let eventConf=this.baseInfoConf.InterceptEvent;
                 if(eventConf!=undefined){
-                    if(eventConf.isOn){
+                    if(eventConf.mounted.isOn){
                         eventConf.mounted.event(_this);
                     }
                 }

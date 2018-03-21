@@ -405,7 +405,8 @@ export default {
             }
        },
        toggleRowSelection(row) {
-            this.$refs.mainTable.toggleRowSelection(row)
+            this.$refs.mainTable.toggleRowSelection(row);
+            this._rowclick(row);
         },
         _functionClick(item){
             let _this=this;
@@ -768,6 +769,17 @@ export default {
                     }
                 })
           }
+        },
+         _rowclick(currentrows){
+                let _this=this;
+                if(this.tableInfoConf.InterceptEvent!=undefined){
+                    let eventConf=this.tableInfoConf.InterceptEvent.rowclick;
+                    if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,currentrows);
+                        }
+                    }
+                }
         },
         _beforeLoad(apiconf){
                 let _this=this;

@@ -53,8 +53,10 @@
            
         </div>
        <hr/>
-        <div class="systemList">
-            <div class="sysBlock" v-for="item in systemList" :key="item.id"
+        <div class="systemList" v-loading="loading">
+            <div class="sysBlock" v-for="(item,index) in systemList" :key="item.id" 
+                     v-loading="blockloading"
+                    :style="{'background-color':getcolor(index)}"
                     @click="_goSystem(item)"
             >
                     <i :class="item.appIcon"></i>
@@ -80,7 +82,9 @@ export default {
                     roleId:'',
                     orgId:'',
                 },
-                systemList:[]
+                systemList:[],
+                loading:false,
+                blockloading:false,
             }   
     },
     computed:{
@@ -96,6 +100,9 @@ export default {
 			}
     },
     methods:{
+        getcolor(index){
+            return util.getColor(index);
+        },
         //注销登录
 		  _loginout(){
 		        this.$confirm('确认退出系统吗?', '提示', {
@@ -109,6 +116,8 @@ export default {
 		        });
           },
          _roleChange(node){
+             this.loading=true;
+             let _this=this;
              let params={
                         procType: 0, 
                         firstKeys: "RoleId", 
@@ -122,10 +131,15 @@ export default {
              this.commonSqlExcute(params).then(
                  data=>{
                      this.systemList=data.items[0];
+                     this.loading=false;
                  }
-             )
+             ).catch(err=>{
+                 _this.loading=false;
+             })
           },
           _goSystem(item){
+              let _this=this;
+              this.loading=true
               document.title=item.appName;
               util.setCookie('appCode',JSON.stringify(item),1);
                let params={};
@@ -144,7 +158,9 @@ export default {
                          else {
                              this.$message.error('失败！'+data.error.message);
                          }
+                         this.loading=false;
                     }).catch(function(error){
+                         _this.loading=false;
                     })
              
           },
@@ -244,7 +260,6 @@ export default {
                     margin-right 15px
                     border 2px solid  #eee
                     border-radius 4px
-                    background #20A0FF
                     color #fff
                     font-size:18px
                     text-align center

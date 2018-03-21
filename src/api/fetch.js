@@ -17,7 +17,8 @@ export default function fetch(options,axiosConfig={baseURL:'',authorization:'',f
     if(axiosConfig.authorization!=''){
             author=axiosConfig.authorization;
     }else{
-            author=store.getters.getToken;
+           // author=store.getters.getToken;
+           author=util.getCookie('Authorization');
     }  
     //实例化的对象
     const instance = axios.create(author==='none'?{}:{

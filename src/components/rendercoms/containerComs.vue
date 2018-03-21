@@ -39,13 +39,7 @@
    >
    </yl-queryChart>
 
-  <!--html内容渲染静态页面-->
-   <div ref="htmlRaw"
-        v-else-if="option.type==='htmlRaw'" 
-        v-html="option.elmentConfig.content" 
-        :style="option.elmentConfig.style"
-    >
-   </div>   
+     
    
     <!--html容器-->
    <yl-htmlContainer ref="htmlContainer"
@@ -59,7 +53,35 @@
         :outParams="outParams"
     >
    </yl-htmlContainer>   
+   
+     <!--综合业务容器渲染器-->
+   <yl-complexContainer ref="complexContainer"
+        v-else-if="option.type==='complexContainer'" 
+        :options="option.elmentConfig.tableInfoConf"
+        :style="option.elmentConfig.style"
+        :outParams="outParams"
+   >
+   </yl-complexContainer>
 
+   <!--html内容渲染静态页面-->
+   <div ref="htmlRaw"
+        v-else-if="option.type==='htmlRaw'" 
+        v-html="option.elmentConfig.content" 
+        :style="option.elmentConfig.style"
+    >
+   </div>
+
+     <!--评论插件-->
+   <yl-commemt ref="commemt"
+        v-else-if="option.type==='commemt'" 
+        :dataId="option.elmentConfig.dataId"
+        :commentModule="option.elmentConfig.commentModule"
+        :maxContent="option.elmentConfig.maxContent"
+        :pageSize="option.elmentConfig.pageSize"
+        :style="option.elmentConfig.style"
+    >
+   </yl-commemt>   
+   
    <!--统计块容器-->
    <yl-statisticsBlock ref="statisticsBlock"
         v-else-if="option.type==='statisticsBlock'" 

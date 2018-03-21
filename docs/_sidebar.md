@@ -1,5 +1,7 @@
 - [首页](/)
 
+- [更新日志](/UpdateLog)
+
 - [全局函数](/globalFun)
 - [指令](/directive)
 - [基础组件](/components)

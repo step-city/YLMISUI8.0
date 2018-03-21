@@ -492,7 +492,7 @@ export default {
                 method: 'post',
                 data: {
                     sorting:'SupplierName',
-                    queryConditionItem:[ {dataField:"OrgId",op:"EQ",dataValue:this.getUserInfo().user.manageOrgId}]
+                    queryConditionItem:[ {dataField:"OrgId",op:"EQ",dataValue:this.getUserInfo().user.realOrgId}]
                 }
             }).then(function (data) {
                 if (data.success) {
@@ -513,7 +513,7 @@ export default {
                 method: 'post',
                 data: {
                     sorting:'LabourName',
-                    queryConditionItem:[ {dataField:"OrgId",op:"EQ",dataValue:this.getUserInfo().user.manageOrgId}]
+                    queryConditionItem:[ {dataField:"OrgId",op:"EQ",dataValue:this.getUserInfo().user.realOrgId}]
                 }
             }).then(function (data) {
                 if (data.success) {
@@ -534,7 +534,7 @@ export default {
                 method: 'post',
                 data: {
                     sorting:'InfoName',
-                    queryConditionItem:[ {dataField:"OrgId",op:"EQ",dataValue:this.getUserInfo().user.manageOrgId}]
+                    queryConditionItem:[ {dataField:"OrgId",op:"EQ",dataValue:this.getUserInfo().user.realOrgId}]
                 }
             }).then(function (data) {
                 if (data.success) {

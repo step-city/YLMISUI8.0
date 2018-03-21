@@ -20,7 +20,7 @@
 | disabled|false| Boolean|false|
 | size|控件大小| String|''|	
 | code|字典编码| Stirng|''|
-
+| clearable|清除| Boolean|false|
 **方法**
 
 暂无
@@ -30,7 +30,7 @@
 | 名称        | 说明           |回调参数|
 | ------------- |:-------------:| -----:|
 | getCurrentvalue| 选中项时触发 |为当前选中节点的data的值|
-
+| clear| 清除数据时触发 |----|
 说明： 该组件已加入至`renderComs`和`renderTableRowComs`渲染器中。
 
 
@@ -97,6 +97,7 @@
 | displaytoolBar|是否显示工具栏| Boolean|false|
 | filterVisibe|是否显示过滤框| Boolean|false|
 | isexpand|是否默认展开| Boolean|false|
+
 **方法**
 
 暂无

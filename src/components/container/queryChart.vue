@@ -74,7 +74,7 @@
                                 </el-button-group>
                              </yl-toolbar>
                         </div>
-                        <div slot="secondbox" class="flexbox">
+                        <div slot="secondbox" class="flexbox content">
                          <!--报表显示区域-->
                                 <yl-echarts 
                                     :options="options" 
@@ -389,12 +389,13 @@ export default {
         },
         _initContainerComs(_coms){
             let _this=this,option=_coms.option;
-            if(option.eventConf!=undefined){
-                if(option.eventConf.isOn){
-                    if(option.eventConf.init!=undefined){
-                            option.eventConf.init(_this,option);
+            if(option.InterceptEvent!=undefined){
+                let eventConf=option.InterceptEvent.init;
+                 if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,option,_coms.outParams);
+                        }
                     }
-                }  
             }
         },
          _beforeLoad(apiconf){
@@ -423,7 +424,7 @@ export default {
                 let _this=this;
                 let eventConf=this.baseInfoConf.InterceptEvent;
                 if(eventConf!=undefined){
-                    if(eventConf.isOn){
+                    if(eventConf.mounted.isOn){
                         eventConf.mounted.event(_this);
                     }
                 }
@@ -463,8 +464,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-        .echarts
-            width 100%
-            height 100%
+.echarts
+    width 100%
+    height 100%
+.content
+    overflow:auto
 </style>
 

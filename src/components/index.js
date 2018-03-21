@@ -27,7 +27,9 @@ import queryContainer from './container/queryContainer'
 import queryContainerR from './container/queryContainerR'
 import statisticsBlock from './container/statisticsBlock'
 import selectContainer from './container/selectContainer'
+import commemt from 'ocomponents/commemt/commemt'
 import htmlContainer from './container/htmlContainer'
+import complexContainer from './container/complexContainer'
 import queryChart from './container/queryChart'
 import renderComs from './rendercoms/renderComs'
 import renderSelComs from './rendercoms/renderSelComs'
@@ -69,6 +71,8 @@ Vue.component('yl-dynamicmodule', dynamicModule)
 Vue.component('yl-dynamicreport', dynamicReport)
 Vue.component('yl-queryChart', queryChart)
 Vue.component('yl-htmlContainer', htmlContainer)
+Vue.component('yl-complexContainer', complexContainer)
+Vue.component('yl-commemt', commemt)
 // Vue.component('yl-loading', loading)
 // Vue.component('yl-error', error)
 Vue.component('yl-commonselect', CommonSelect)

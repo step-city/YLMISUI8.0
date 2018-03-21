@@ -32,6 +32,9 @@
           },
       },
       methods: {
+          setText(content){
+              this.editor.txt.html(content)
+          }
       },
       computed:{
           editor:{

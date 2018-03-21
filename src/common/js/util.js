@@ -64,14 +64,14 @@ export default {
                   this.removeCookie('appCode');
                   this.removeCookie('userInfo');
 				  this.setCookie('loginStatus','off',1);
-				  store.commit('COM_Token', this.getDefaultToken());
-                  store.commit('COM_LOGINSTATUS', false);
+				//   store.commit('COM_Token', this.getDefaultToken());
+                //   store.commit('COM_LOGINSTATUS', false);
     },
     setLogin:function(token){
         this.setCookie('Authorization',"Bearer " +token,1);
         this.setCookie('loginStatus',"on",1);
-        store.commit('COM_Token', "Bearer " +token);
-        store.commit('COM_LOGINSTATUS', true);
+        // store.commit('COM_Token', "Bearer " +token);
+        // store.commit('COM_LOGINSTATUS', true);
     },
     //操作cookie
     setCookie:function (name, value, iDay) {
@@ -151,24 +151,24 @@ export default {
     },
 
     //根据ID在树形结构中返回名称
-        node:{
-            nodeName:'',
-            getNameByID:function (data,id){
-                    let temp;
-                    for(let i in data){
-                        if(data[i].id==id){
-                            this.nodeName=data[i].text;
-                            break;
-                        }else{
-                            if(data[i].children!=null){
-                                temp = data[i].children;
-                                this.getNameByID(temp,id); 
-                            }
-                        
-                        }    
-                    } 
-            }
-        },
+    node:{
+        nodeName:'',
+        getNameByID:function (data,id){
+                let temp;
+                for(let i in data){
+                    if(data[i].id==id){
+                        this.nodeName=data[i].text;
+                        break;
+                    }else{
+                        if(data[i].children!=null){
+                            temp = data[i].children;
+                            this.getNameByID(temp,id); 
+                        }
+                    
+                    }    
+                } 
+        }
+    },
   
     dealFunction:function(k,v) {
                     let _this=this;
@@ -177,6 +177,7 @@ export default {
                     }
                     return v;
                 },
+
     base64Decrypt:function(value){
             return  decode(value);
         },
@@ -234,5 +235,42 @@ export default {
         }
         return array;
     },
-
+    //随机获取色值
+    getColor:function(index){
+        let colorArr=[
+            '#455A64',
+            '#1D8CE0',
+            '#13CE66',
+            '#F7BA2A',
+            '#FF4949',
+            '#1F2D3D',
+            '#475669',
+            '#EF9A9A',
+            '#B71C1C',
+            '#FF1744',
+            '#C51162',
+            '#7B1FA2',
+            '#EA80FC',
+            '#D500F9',
+            '#4A148C',
+            '#00796B',
+            '#80CBC4',
+            '#1DE9B6',
+            '#CDDC39',
+            '#827717',
+            '#81C784',
+            '#FFF59D',
+            '#E65100',
+            '#607D8B',
+            '#4E342E',
+            '#58B7FF',
+            '#424242'
+        ]
+        if(index!=undefined){
+            return colorArr[index];
+        }else{
+            return colorArr[Math.floor(Math.random()*(colorArr.length))];
+        }
+       
+    }
 }

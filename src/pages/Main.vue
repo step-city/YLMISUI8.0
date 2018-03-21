@@ -37,14 +37,14 @@
 			<div class="left-wrapper" :class="{  'left-wrapper-close':isClose}"  >
 			   <el-menu default-active="/home"  class="el-menu-vertical" v-loading="menuLoading" element-loading-text="菜单加载中..."   @open="_handleOpen" @close="_handleClose" unique-opened :router="true">
 					<el-menu-item index="/home" class="single"><i class="icon-home"></i>系统门户</el-menu-item>
-						<el-submenu :index="fristmenulist.name" class="el-submenu-main"   v-for="(fristmenulist,index) in menuList" :key="index"> 
+						<el-submenu :index="findex+'f'" class="el-submenu-main"   v-for="(fristmenulist,findex) in menuList" :key="findex"> 
 							<template slot="title" ><i :class="fristmenulist.icon"></i>{{fristmenulist.displayName}}</template>
-									<el-submenu :index="secondmenulist.name" class="el-submenu-item" v-for="(secondmenulist,index) in fristmenulist.items" :key="index">
+									<el-submenu :index="sindex+'s'" class="el-submenu-item" v-for="(secondmenulist,sindex) in fristmenulist.items" :key="sindex">
 										<template slot="title"><i :class="secondmenulist.icon"></i>{{secondmenulist.displayName}}</template>
 											<el-menu-item :index="thirdmenulist.url" v-for="(thirdmenulist,index) in secondmenulist.items" :key="index">{{thirdmenulist.displayName}}</el-menu-item>
 									</el-submenu>
 					  </el-submenu>
-					   <el-menu-item index="/pages/apitest" class="single"><i class="icon-home"></i>API测试界面</el-menu-item>
+					   <el-menu-item index="/apitest" class="single"><i class="icon-home"></i>API测试界面</el-menu-item>
 					 <!-- <el-menu-item index="/pages/comdemo" class="single"><i class="icon-home"></i>业务组件用例</el-menu-item>
 					 
 					  <el-menu-item index="/pages/test" class="single"><i class="icon-home"></i>测试界面</el-menu-item> -->

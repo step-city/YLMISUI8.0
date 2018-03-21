@@ -1,30 +1,40 @@
 ﻿<template>
-  <div id="pic_list">
-    <!--<div v-for="item in stateList"  style="line-height:30px;display:inline;">-->
-     <ul style="font-size: 14px;background-color:#58B7FF;color:#FFFFFF;" >
-                        <li>
-                            <span>审批阶段</span> 
-                        </li>
-                        <li>
-                            <span>操作人</span>
-                        </li> 
-                        <li>
-                            <span>操作时间</span>
-                        </li>
-                         <li>
-                            <span>状态</span>
-                        </li>
-                        <li>
-                            <span>审批意见</span>
-                        </li>
-                    </ul>
-                     <ul  v-for="item in stateList"  style="font-size:12px;">
-                       <li> <span>{{item.stateDesc}}</span>  </li>
-                        <li><span>{{item.dealUserName}}</span>  </li>
-                        <li><span>{{item.dealTime}}</span>  </li>
-                        <li><span>{{item.stateText}}</span>  </li>
-                        <li><span>{{item.dealOptions}}</span>  </li>
-                    </ul>
+  <div class="content">
+             <table class="yltable">
+                    <thead height="20px" style="background-color:#58B7FF">
+                        <tr>
+                            <th width="60px">
+                             审批阶段
+                            </th>
+                            <th width="60px">
+                               操作人
+                            </th> 
+                            <th >
+                               操作时间
+                            </th>
+                            <th  width="60px">
+                               状态
+                            </th>
+                            <th width="200px">
+                               审批意见
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="stateList.length>0">
+                            <tr   v-for="(item,index) in stateList"  :key="index">
+                                <td> <span>{{item.stateDesc}}</span>  </td>
+                                <td><span>{{item.dealUserName}}</span>  </td>
+                                <td><span>{{item.dealTime}}</span>  </td>
+                                <td><span>{{item.stateText}}</span>  </td>
+                                <td><span>{{item.dealOptions}}</span>  </td>
+                            </tr> 
+                     </tbody>
+                     <tbody v-else>       
+                            <tr>
+                                    <td colspan="5"><span>暂无审批意见</span>  </td>
+                            </tr>
+                    </tbody>
+             </table>     
       </div>
 </div>
 </template>
@@ -76,16 +86,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-#pic_list {
-  display: block;
-  width: 100%;
-  color: #002;
-  text-align: left;
-  height:auto;
-}
-#pic_list li {
-  width: 19%;
-  margin: 5px 0px;
-  display: inline-block;
-}
+
 </style>

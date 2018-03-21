@@ -32,7 +32,6 @@ export default {
             let initConf=this.configs;
             let code=util.base64Decrypt(this.desCode); 
             this.status=this.IPCamera.init(initConf.v_Col9,initConf.i_Col1,initConf.v_Col10,initConf.v_Col11,code);
-            //this.status=this.IPCamera.init("192.168.20.91", 8000, "admin", "a1234567", "041062");
             if(this.status!="E00"){
                  this.$message.error('['+this.configs.v_Col8+']摄像头初始化失败！');
             }

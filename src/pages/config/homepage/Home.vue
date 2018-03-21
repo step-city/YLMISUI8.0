@@ -58,6 +58,9 @@ export default {
                 });
         },
 	},
+	beforeMount(){
+		
+	},
 	mounted(){
 		this.roleId=this.getUserInfo().user.roleId;
     },

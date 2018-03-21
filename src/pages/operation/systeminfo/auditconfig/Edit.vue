@@ -96,7 +96,7 @@
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="撤销关联关系" prop="unAuditJudgeStr">
-                         <el-input type="textarea" v-model="formModel.unAuditJudgeStr" ></el-input>
+                         <el-input type="textarea" rows="5" v-model="formModel.unAuditJudgeStr" ></el-input>
                     </el-form-item>
                 </el-col>
                  
@@ -104,7 +104,7 @@
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="删除条件" prop="deleteItemJudgeStr">
-                         <el-input type="textarea" v-model="formModel.deleteItemJudgeStr" ></el-input>
+                         <el-input type="textarea" rows="5" v-model="formModel.deleteItemJudgeStr" ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>

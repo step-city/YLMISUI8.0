@@ -550,11 +550,13 @@ switch开关配置
                         "size":"small", //控件尺寸
                         "disabled":false, //是否禁用
                         "placeholder":"", //占位字符
+                        "clearable":"", //占位字符
                         "style":{},  //样式
                     },
     "eventConf": {   //控件回调函数配置
                     "isOn": true,  //是否开启回调函数
                     "change": "function(node,_this,option){}",  //change 配置回调函数类型和函数函数体、参数说明：node为选中值，_this为模块表单的实例对象。
+                    "method1": "function(node,_this,option){}"  //清除事件回调
                     "init": "function(_this,option){}"
                     }
    }

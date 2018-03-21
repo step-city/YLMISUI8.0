@@ -2,7 +2,6 @@
 <yl-panelpage 
     :titleName="baseInfoConf.panelpage.titleName" 
     :icon="baseInfoConf.panelpage.icon" 
-    :extendAttr="baseInfoConf.panelpage.extendAttr" 
     :reloadIsShow="baseInfoConf.panelpage.reloadIsShow" 
     :fullScreenIsShow="baseInfoConf.panelpage.fullScreenIsShow" 
     :helpIsShow="baseInfoConf.panelpage.helpIsShow" 
@@ -71,7 +70,7 @@
                                     </yl-toolbar>
                                 </el-form>
                             </div>
-                            <div slot="secondbox" class="flexbox">
+                            <div slot="secondbox" class="flexbox content">
                                          <el-tabs v-model="activeName" 
                                             :type="tableInfoConf.type" 
                                             @tab-click="_tabClick"
@@ -201,7 +200,6 @@ export default {
                     inputArr.firstKeys.push(...this.inputParams.firstKeys);
                     inputArr.firstValues.push(...this.inputParams.firstValues);
                 }  
-                
                 this.outParams=inputArr;
 
            },
@@ -283,12 +281,13 @@ export default {
         },
         _initContainerComs(_coms){
             let _this=this,option=_coms.option;
-            if(option.eventConf!=undefined){
-                if(option.eventConf.isOn){
-                    if(option.eventConf.init!=undefined){
-                            option.eventConf.init(_this,option);
+            if(option.InterceptEvent!=undefined){
+                let eventConf=option.InterceptEvent.init.eventConf;
+                 if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,option,_coms.outParams);
+                        }
                     }
-                }  
             }
         },
         _inputArrInit(){
@@ -358,6 +357,8 @@ export default {
 .el-tab-pane{
     height:100%;
 }
-
+.content{
+    overflow:auto;
+    }
 </style>
 

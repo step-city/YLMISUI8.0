@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div><h3>模块：{{moduleInfo.mouduleName}}</h3><h3>表名：{{moduleInfo.tableName}}</h3></div>
+        <div><h3>菜单名：{{moduleInfo.mouduleName}}</h3></div>
+        <div><h3>表名：{{moduleInfo.tableName}}</h3></div>
         <el-table :data="formModel.items" border style="width: 100%;" max-height="500">
             <el-table-column
                 label="列"
@@ -79,7 +80,6 @@ export default {
             },
     },
     mounted(){
-        console.log(this.moduleInfo);
         this.formModel.items=this.colInfo;
 
     }

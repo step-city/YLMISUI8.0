@@ -703,7 +703,9 @@ configs配置 （内部包含pagination配置）
 
 ** 方法 **
 
-暂无
+| 方法名| 说明           |参数|
+| ------------- |:-------------:| -----:|
+| setText| 给编辑器设置值 | html|
 
 
 
@@ -948,6 +950,84 @@ json配置
 
 ```
 ---
+
+### commemt
+
+> 标签： `<yl-commemt></yl-commemt>` 
+
+**作用:**  评论组件，一般队业务针对业务对象进行引用
+
+** 属性 **
+
+| 参数        | 说明           |类型   |默认值|可选值|
+| ------------- |-------------| -----|---|---|
+| dataId| 业务对象关联主键 | String | ''|--|
+| commentModule| 评论模块 | String|'' |--|
+| maxContent| 评论框最大字数  | |Number|200|
+| pageSize| 每页显示条目数| Number| 10|--|
+
+** 方法 **
+暂无
+
+
+**  事件 **
+暂无
+
+
+
+##### 用法示例
+
+solSlotConf配置
+
+```json
+     "solSlotConf": [
+                {
+                  "type": "view",
+                  "name": "viewSlot",
+                  "elmentConfig": [
+                    {
+                      "name": "commemt",
+                      "icon": "icon-chat2",
+                      "tipText": "评论",
+                      "isShow": true,
+                      "isContainer": true,
+                      "eventConf": {
+                        "isOn": true,
+                        "click": "function(row,name,_this,conf){conf.option.elmentConfig.dataId=row.orderId};"
+                      }
+                    }
+                  ]
+                }
+              ]
+```
+
+
+itemConf配置
+
+```json
+     "itemConf": [
+            "commemt": {
+              "dialogConf": {
+                "size": "normal",
+                "top": "10%",
+                "title": "资源评论"
+              },
+              "option": {
+                "type": "commemt",
+                "elmentConfig": {
+                  "style": "height:450px",
+                  "dataId":"",
+                  "commentModule":'模块code',
+                  "maxContent":500,
+                  "pageSize":10
+                }
+              }
+            }
+              ]
+```
+
+---
+
 
 ## 树组件
 

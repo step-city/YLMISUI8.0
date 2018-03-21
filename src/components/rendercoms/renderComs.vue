@@ -152,9 +152,6 @@
     </el-time-picker>   
 
 
-
-    
-
     <!--通用选择器-->      
      <yl-commonselect ref="commonselect"
             v-else-if="option.type==='commonselect'" 
@@ -295,9 +292,11 @@
         :code="option.elmentConfig.code"
         :placeholder="option.elmentConfig.placeholder"
         :size="option.elmentConfig.size"
+        :clearable="option.elmentConfig.clearable"
         :disabled="option.elmentConfig.disabled"
         :style="option.elmentConfig.style"
         @getCurrentvalue="_change"
+        @clear="_method1"
       >
     </yl-datadictionaryforsel>
 

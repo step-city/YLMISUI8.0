@@ -14,9 +14,9 @@
              <el-col :span="24">
                 <el-form-item label="内容" prop="content">
                          <yl-editor 
-                         isPreView
-                         :content="formModel.content"
-                         @onchange="_change"></yl-editor>
+                            isPreView
+                            :content="formModel.content"
+                            @onchange="_change"></yl-editor>
                 </el-form-item>
             </el-col>
          </el-row>
@@ -115,9 +115,9 @@ export default {
          _complete(){
                 this.$emit('close');
             },
-            _change(html){
-                this.formModel.content=html;
-            }
+        _change(html){
+            this.formModel.content=html;
+        }
     },
     computed:{
       editor() {

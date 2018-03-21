@@ -325,7 +325,8 @@ export default {
             }
         },
         toggleRowSelection (row) {
-            this.$refs.queryTableR.toggleRowSelection(row)
+            this.$refs.queryTableR.toggleRowSelection(row);
+            this._rowclick(row);
         },
         _exportExecl(fname){
             let fileName='';
@@ -472,13 +473,25 @@ export default {
         },
         _initContainerComs(_coms){
             let _this=this,option=_coms.option;
-            if(option.eventConf!=undefined){
-                if(option.eventConf.isOn){
-                    if(option.eventConf.init!=undefined){
-                            option.eventConf.init(_this,option);
+            if(option.InterceptEvent!=undefined){
+                let eventConf=option.InterceptEvent.init;
+                 if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,option,_coms.outParams);
+                        }
                     }
-                }  
             }
+        },
+        _rowclick(currentrows){
+                let _this=this;
+                if(this.tableInfoConf.InterceptEvent!=undefined){
+                    let eventConf=this.tableInfoConf.InterceptEvent.rowclick;
+                    if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,currentrows);
+                        }
+                    }
+                }
         },
          _beforeLoad(apiconf){
                 let _this=this;
@@ -506,7 +519,7 @@ export default {
                 let _this=this;
                 let eventConf=this.baseInfoConf.InterceptEvent;
                 if(eventConf!=undefined){
-                    if(eventConf.isOn){
+                    if(eventConf.mounted.isOn){
                         eventConf.mounted.event(_this);
                     }
                 }

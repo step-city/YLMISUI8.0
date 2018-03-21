@@ -3,7 +3,10 @@
         <div slot="content">
             <yl-columnlay>
                 <div slot="left"  >
-                    <yl-panelpage isZone :helpIsShow="false" :treeLoading="treeLoading"   :titleName="'系统字典'" @reload="_treeReload" :reloadIsShow="false" :icon="'icon-tree'" :widthNum="'210px'" >
+                    <yl-panelpage isZone
+                     :helpIsShow="false" 
+                     :treeLoading="treeLoading"  
+                      :titleName="'系统字典'" @reload="_treeReload" :reloadIsShow="true" :icon="'icon-tree'" :widthNum="'210px'" >
                         <div slot="content">
                             <el-tree :data="dictionaryTreeData"  
                                         :props="defaultProps"

@@ -4,6 +4,7 @@ export default{
     
     data(){
         return {
+            
         }
     },
     props: {
@@ -13,6 +14,12 @@ export default{
                 return []
             }
         },
+        outParams:{
+            type:Object,
+            default:function(){
+                return {}
+            }
+        }
     },
     methods:{
             renderItem(conf){
@@ -65,12 +72,13 @@ export default{
          },
          _initContainerComs(_coms){
             let _this=this,option=_coms.option;
-            if(option.eventConf!=undefined){
-                if(option.eventConf.isOn){
-                    if(option.eventConf.init!=undefined){
-                            option.eventConf.init(_this,option);
-                    }
-                }  
+            if(option.InterceptEvent!=undefined){
+                let eventConf=option.InterceptEvent.init;
+                 if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,option,_coms.outParams);
+                        }
+                    }  
             }
         },
     },

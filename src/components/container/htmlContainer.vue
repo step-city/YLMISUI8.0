@@ -86,30 +86,11 @@
                                 </el-button-group>
                              </yl-toolbar>
                         </div>
-                        <div slot="secondbox" class="flexbox content">
-                         <!--表显示区域-->
-                              <!-- <yl-tableR ref="queryTableR"
-                                    @reload="_reload"
-                                    @current-change="_currentChange"
-                                    @selection-change="_selectionChange"
-                                    @row-click="toggleRowSelection"
-                                    :configs="tableInfoConf"
-                                    :tableData="tableData" 
-                                    :pagination="tableInfoConf.pagination" 
-                                    :tableloading="mainTableLoading" 
-                                    >
-                                    <template :slot="item.name" scope="scope" v-for="(item,index) in tableInfoConf.solSlotConf"> 
-                                            <yl-tableSlotComs 
-                                                :key="index"
-                                                :option="item" 
-                                                :row="scope.row" 
-                                                :name="item.name"
-                                                @tableSlotEvent="_tableSlotEvent"
-                                                >
-                                            </yl-tableSlotComs>
-                                    </template>
-                            </yl-tableR> -->
-                            <div v-html="content"></div>
+                        <div slot="secondbox" 
+                             class="flexbox content" 
+                             element-loading-text="加载中..."
+                             v-loading="Loading">
+                            <div v-html="content" ></div>
                         </div>
                     </yl-layout> 
                     <!--动态容器-->
@@ -129,6 +110,7 @@
                     > 
                     </yl-containercoms>
                 </el-dialog>
+
                </div>  
                 
       </yl-columnlay>
@@ -144,7 +126,6 @@ export default {
     data(){
         return {
                 mainInput:new inputModel(),
-                mainTableLoading:false,
                 searchModel:{},
                 selectRows:[],
                 currentRows:{},
@@ -155,8 +136,9 @@ export default {
                 },
                 refList:{},
                 extensionObj:{},
-                content:'<p>正在初始化...</p>',
+                content:'',
                 tableData:[],
+                Loading:false,
                 itemFormVisible:false,
                 itemConf:{
                     dialogConf:{
@@ -166,7 +148,8 @@ export default {
                         }, 
                         option:{}
                    },
-               funBtnConf:{}
+               funBtnConf:{},
+               emptyContent:'<div style="width:100%;height:200px;line-height:200px;text-align:center">暂无数据</div>'
             }
     },
     props:{
@@ -273,6 +256,7 @@ export default {
             let params=this.apiConf.filterParams;     
             params.firstKeys=inputArr.firstKeys.join(",");  
             params.firstValues=inputArr.firstValues.join(",");
+            this.Loading=true;
             this._beforeLoad(params);
             fetch({
                   url: '/api/services/app/sqlExecute/ExecuteSqlAndProcCommand',
@@ -281,17 +265,16 @@ export default {
             }).then(data=>{    
                         if(data.success){
                             if(data.result.resultType===0){
-                                  this.extensionObj.table=data.result.items[0];
+                                  this.tableData=data.result.items;
                                   this._afterLoad();
-                                  this.tableData=this.extensionObj.table;
                             }
                         }
                         else {
                             this.$message.error('失败！'+data.error.message);
                         }
-                        this.mainTableLoading=false;
+                        this.Loading=false;
                     }).catch(function(error){
-                        _this.mainTableLoading=false;
+                         _this.Loading=false;
                         _this.$message.error('获取数据失败！');
                     });
         },
@@ -437,18 +420,19 @@ export default {
         },
         _initContainerComs(_coms){
             let _this=this,option=_coms.option;
-            if(option.eventConf!=undefined){
-                if(option.eventConf.isOn){
-                    if(option.eventConf.init!=undefined){
-                            option.eventConf.init(_this,option);
+            if(option.InterceptEvent!=undefined){
+                let eventConf=option.InterceptEvent.init;
+                 if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,option,_coms.outParams);
+                        }
                     }
-                }  
             }
         },
          _beforeLoad(apiconf){
                 let _this=this;
                 if(this.filterConf.InterceptEvent!=undefined){
-                    let eventConf=this.filterConf.InterceptEvent.beforeLoad;
+                    let eventConf=this.filterConf.InterceptEvent.beforeLoad.eventConf;
                     if(eventConf!=undefined){
                         if(eventConf.isOn){
                             eventConf.event(_this,apiconf);
@@ -459,7 +443,7 @@ export default {
          _afterLoad(){
                 let _this=this;
                 if(this.filterConf.InterceptEvent!=undefined){
-                    let eventConf=this.filterConf.InterceptEvent.afterLoad;
+                    let eventConf=this.filterConf.InterceptEvent.afterLoad.eventConf;
                     if(eventConf!=undefined){
                         if(eventConf.isOn){
                             eventConf.event(_this);
@@ -468,17 +452,16 @@ export default {
                 }
         },
          _mounted(){
-                let _this=this;
+               let _this=this;
                 let eventConf=this.baseInfoConf.InterceptEvent;
                 if(eventConf!=undefined){
-                    if(eventConf.isOn){
+                    if(eventConf.mounted.isOn){
                         eventConf.mounted.event(_this);
                     }
                 }
         },
         //---------------
         init(){
-            
             this._inputArrInit();
             //初始化拦截
             this._mounted();
@@ -492,7 +475,7 @@ export default {
         this.searchModel=this.filterConf.searchModel;
         this.filterFormConf=this.filterConf.searchFilterConf;
         this.funBtnConf=this.functionConf.funBtn;
-        this.content=this.tableInfoConf.content.default;
+        this.content=this.tableInfoConf.content;
     },
     beforeMount(){
     },
@@ -503,17 +486,6 @@ export default {
         outParams:function(n,o){
             this._reload();
         },
-        tableData:function(n,o){
-            let _this=this;
-            if(this.tableInfoConf.watch!=undefined){
-                    let eventConf=this.tableInfoConf.watch.tableData;
-                    if(eventConf!=undefined){
-                        if(eventConf.isOn){
-                            eventConf.event(_this);
-                        }
-                    }
-                }
-        }
     }
    
 }

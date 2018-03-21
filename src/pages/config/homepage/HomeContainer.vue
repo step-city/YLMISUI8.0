@@ -1,13 +1,14 @@
 <template>
 	 <yl-panelpage v-if="type===1"
-		:titleName="homePageConf.configPage.panelpage.titleName" 
-		:icon="homePageConf.configPage.panelpage.icon"
-		:fullScreenIsShow="homePageConf.configPage.panelpage.fullScreenIsShow"
-		:helpIsShow="homePageConf.configPage.panelpage.helpIsShow"
+			:titleName="homePageConf.configPage.panelpage.titleName" 
+			:icon="homePageConf.configPage.panelpage.icon"
+			:fullScreenIsShow="homePageConf.configPage.panelpage.fullScreenIsShow"
+			:helpIsShow="homePageConf.configPage.panelpage.helpIsShow"
 		>
 		<div slot="content">
 			<renderContainerLay
 				:options="homePageConf.configPage.content"
+				:outParams="outParams"
 			>
 			</renderContainerLay>		
 		</div>
@@ -22,6 +23,7 @@ export default {
 	data(){
 		return {
 			type:0,
+			outParams:{}
 		}
 	},
 	props:{
@@ -33,6 +35,17 @@ export default {
 		}
 	},
 	methods:{
+		_initEvent(){
+            let _this=this,option=this.homePageConf.configPage;
+            if(option.InterceptEvent!=undefined){
+                let eventConf=option.InterceptEvent.init;
+                 if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,option);
+                        }
+                    }
+            }
+        },
 		_init(){
 			this.type=this.homePageConf.homeType;
 			this.linkToPage();
@@ -42,6 +55,7 @@ export default {
 				this.$router.push({ path:this.homePageConf.modulePage.routerUrl});
 			}
 		}
+		
 	},
 	mounted(){
 		this._init();

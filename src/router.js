@@ -7,7 +7,6 @@ const RoleList = resolve => require(['./pages/RoleList.vue'], resolve);
 const Main = resolve => require(['./pages/Main.vue'], resolve);
 const Home = resolve => require(['./pages/config/homepage/Home.vue'], resolve);
 const Page404 = resolve => require(['./pages/Page404.vue'], resolve);
-const ComDemo = resolve => require(['./pages/ComDemo.vue'], resolve);
 const jsObjTurn = resolve => require(['./pages/jsObjTurn.vue'], resolve);
 const MenuItem = resolve => require(['./pages/operation/systeminfo/menuitem/MenuItem.vue'], resolve);
 const MenuApp = resolve => require(['./pages/operation/systeminfo/menuapp/MenuApp.vue'], resolve);
@@ -62,7 +61,6 @@ routes:[
     children: [
       { path: '/home', component: Home, name: '首页'  },
       { path: '/defaulthome', component: DefultHomePage, name: '默认首页'  },
-      
     ]
   },
   {
@@ -70,9 +68,8 @@ routes:[
     component: Main,
     name: '易龙快速开发平台',
     children: [
-         { path: 'comdemo', component: ComDemo, name: '组件测试页面' },
           { path: 'apitest', component: ApiTest,name: 'api测试页面'  },
-          { path: 'jsobjturn', component: jsObjTurn,name: 'js转化json'  },
+          { path: 'jsobjturn', component: jsObjTurn,name: '测试页面'  },
           { path: 'menuItem', component: MenuItem, name: '菜单管理' },
           { path: 'menuApp', component: MenuApp, name: '应用系统' },
           { path: 'function', component: Functions, name: '功能管理' },

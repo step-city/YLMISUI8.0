@@ -3,7 +3,9 @@
                :placeholder="placeholder" 
                :size="size"
                :disabled="propsData.disabled"
+               :clearable="clearable"
                @change='_getCurrentNode'  
+               @clear="_clear"
                style="width:100%">
         <el-option
             v-for="(item,index) in data"
@@ -54,6 +56,10 @@ export default {
             type: Boolean,
             default: false 
             }, 
+        clearable:{
+            type: Boolean,
+            default: false 
+            }, 
         value:[String,Number],
         validateEvent: {
                         type: Boolean,
@@ -61,6 +67,9 @@ export default {
                        },
     },
     methods:{
+        _clear(){
+             this.$emit('clear');
+        },
         _getCurrentNode(val){
           
             this.$emit('input',val);

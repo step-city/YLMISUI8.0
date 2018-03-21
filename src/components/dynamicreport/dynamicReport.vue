@@ -2,7 +2,6 @@
 <yl-panelpage 
     :titleName="baseInfoConf.panelpage.titleName" 
     :icon="baseInfoConf.panelpage.icon" 
-    :extendAttr="baseInfoConf.panelpage.extendAttr" 
     :reloadIsShow="baseInfoConf.panelpage.reloadIsShow" 
     :fullScreenIsShow="baseInfoConf.panelpage.fullScreenIsShow" 
     :helpIsShow="baseInfoConf.panelpage.helpIsShow" 
@@ -10,13 +9,13 @@
     :theme="baseInfoConf.panelpage.theme"
 >
   <div slot="content">  
-                <yl-containercoms     
-                        ref="containercoms"
-                        @init="_initContainerComs"
-                        :option="option"
-                        :outParams="outParams"
-                >
-                </yl-containercoms> 
+        <yl-containercoms     
+                ref="containercoms"
+                @init="_initContainerComs"
+                :option="option"
+                :outParams="outParams"
+        >
+        </yl-containercoms> 
    </div>
 </yl-panelpage>
 </template>
@@ -51,6 +50,10 @@ export default {
         functionConf:{
             type:Object,
             require:true,
+        },
+        formConf:{
+            type:Object,
+            require:true,
         }
     },
     computed: {
@@ -73,14 +76,13 @@ export default {
     methods:{
        _initContainerComs(_coms){
             let _this=this,option=_coms.option;
-             let eventConf=this.baseInfoConf.InterceptEvent;
-            if(eventConf!=undefined){
-                if(eventConf.isOn){
-                    if(eventConf.init!=undefined){
-                            eventConf.init(_this,option);
-                            
-                    }
-                }  
+            if(this.baseInfoConf.InterceptEvent){
+             let eventConf=this.baseInfoConf.InterceptEvent.init;
+                if(eventConf){
+                    if(eventConf.isOn){
+                          eventConf.event(_this,option,_coms.outParams);
+                    }  
+                }
             }
         },
     },
@@ -93,6 +95,7 @@ export default {
         elmentConfig.filterConf=this.filterConf;
         elmentConfig.tableInfoConf=this.tableInfoConf;
         elmentConfig.functionConf=this.functionConf;
+        elmentConfig.formConf=this.formConf;
         elmentConfig.style=this.baseInfoConf.style;
         this.option.elmentConfig=elmentConfig;
         this.option.type=this.baseInfoConf.reportType;

@@ -11,10 +11,12 @@
                                     size="small" 
                                     style="width:200px" 
                                     v-model="menuItemId"
+                                    displaytoolBar
+                                    @clear="_clear"
                                     @getCurrentNode="_handleNodeClick"
                                ></yl-menuItemTree>   
                             </el-form-item>
-                                <el-form-item  class="form-content-vertical">
+                            <el-form-item  class="form-content-vertical">
                                     <el-select v-model="tableName" @change="_reload()" style="width:100%;" size="small"   placeholder="请选择表名">
                                         <el-option
                                         v-for="item in treedata"
@@ -85,7 +87,7 @@ export default {
     data(){
         return{
             treeLoading:false,
-            selectNode:{id:"00000000-0000-0000-0000-000000000000"},
+            selectNode:{id:""},
             defaultProps: {
                     children: 'children',
                     label: 'text',
@@ -122,7 +124,7 @@ export default {
                             }
                         },
                         columns: [
-                            {attr: { type: 'selection',label: '全选', width:80,align: 'center' }},
+                            {attr: { type: 'selection',label: '全选', width:80,align: 'center' ,headerAlign:'center'}},
                             {attr: { prop: 'tableName', label: '表', width:200,  } },   
                             {attr: { prop: 'columnName', label: '列名', width:200,  } },   
                             {attr: { prop: 'columnExplain', label: '列说明', width:250,  } },
@@ -143,6 +145,12 @@ export default {
             },
         _treeReload(){
             this.selectNode={id:this.guidOfNull()};
+        },
+        _clear(){
+            this.tableName='';
+            this.menuItemId='';
+            this.selectNode.text='';
+            this._getGetTableConfigTreeList();
         },
         //获取数据库列表
         _getGetTableConfigTreeList(){
@@ -202,7 +210,7 @@ export default {
         },
         _add(){
             this.tableCol=[];
-            if(this.selectNode.id!=this.guidOfNull()){
+            if(this.tableName!=''){
                 if(this.tableData.data.length===0){
                     this._getcol();
                     this.addFormVisible=true;
@@ -214,7 +222,7 @@ export default {
                     this.$message.warning('需要清除该条件下的列表信息才能新添加！');
                 }
             }else{
-                this.$message.warning('请选择模块！');
+                this.$message.warning('请选择编辑表！');
             }
         },
         _edit(){
@@ -263,10 +271,10 @@ export default {
             var _this=this;
             this.selectRows=[];
             this.mainTableLoading=true; //开启加载
-            var inputArr=[ 
-                            {key:"TableName",op:"EQ",value:this.tableName},
-                              {key:"MouduleId",op:"EQ",value:this.selectNode.id}
-                            ];
+            var inputArr=[ {key:"TableName",op:"EQ",value:this.tableName}];
+            if(this.menuItemId!=''){
+                inputArr.push( {key:"MouduleId",op:"EQ",value:this.menuItemId})
+            }
             this.mainInput.addqueryConditionItem(inputArr);
             this.mainInput.inputModel.sorting="SortCode";
             requestGetMainPageList(this.mainInput.inputModel).then(data =>{
@@ -294,6 +302,7 @@ export default {
         'yl-menuItemTree':menuItemTree
     },
     mounted(){
+         this._getGetTableConfigTreeList();
     }
 }
 </script>

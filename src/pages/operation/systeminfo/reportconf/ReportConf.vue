@@ -48,8 +48,8 @@
                                 <yl-jsoneditor ref="functionConf" v-model="formModel.functionConf" style="height:600px"></yl-jsoneditor>
                             </el-form-item>
                         </el-tab-pane>
-                        <el-tab-pane label="数据可视化配置  " name="formConf"> 
-                            <el-form-item label="数据可视化配置" prop="formConf">
+                        <el-tab-pane label="其他配置  " name="formConf"> 
+                            <el-form-item label="其他配置" prop="formConf">
                                 <yl-jsoneditor ref="formConf" v-model="formModel.formConf" style="height:600px"></yl-jsoneditor>
                             </el-form-item>
                         </el-tab-pane>

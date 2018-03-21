@@ -173,8 +173,8 @@
         <el-input type="textarea" v-model="formModel.deletedCon" ></el-input>
     </el-form-item>  
     <el-row>
-        <el-form-item label="配置juConStr" prop="juConStr">
-                <el-input type="textarea" v-model="formModel.juConStr" ></el-input>
+        <el-form-item label="配置撤销条件" prop="juConStr">
+                <el-input type="textarea" rows="5" v-model="formModel.juConStr" ></el-input>
         </el-form-item>
     </el-row>     
    <el-form-item style="text-align:right;" >

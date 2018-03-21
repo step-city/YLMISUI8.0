@@ -10,16 +10,7 @@
 			<div class="title"></div>
 			<div class="loginform">
 				<el-form class="loginlay" :model="LoginForm" :rules="rules" ref="LoginForm" label-width="0px" label-position="left">
-						<!-- <el-form-item  prop="appCode" >
-							<el-select v-model="LoginForm.appCode" placeholder="请选择系统" size="large" style="width:270px" @change="_selectMneuApp">
-								<el-option
-									v-for="(item,index) in menuAppList"
-									:key=index
-									:label="item.appDescription"
-									:value="item.appCode">
-								</el-option>
-							</el-select>
-						</el-form-item> -->
+				
 						<el-form-item  prop="userName" >
 							<el-input v-model="LoginForm.userName" size="large"  placeholder="请输入用户名" style="width:270px">
 								<template slot="prepend"><i class="icon-user-tie"></i></template>
@@ -149,10 +140,10 @@ export default {
 					//表单重置
 					 this.$refs.LoginForm.resetFields();
 			    },
-			    _getGlobConf(){
+				_getGlobConf(){
 					let inputArr=[],input={};
 					input.queryConditionItem=inputArr;
-                    input.sorting="";
+					input.sorting="";
 					requestGetGlobConfigInfo(input).then(data=>{
 						if(data.success){
 							data.result.map(i=>{
@@ -165,19 +156,21 @@ export default {
 				},
 				_getIoToken(){
 					if(window.getClientObj().ioConf.url!=''){
-					fetch({ 
-							url: '/Token',
-							method: 'post',
-							data:{
-									client_id:window.getClientObj().ioConf.clientId,
-									client_secret:window.getClientObj().ioConf.clientSecret,
-									grant_type:'client_credentials'
-								}
-						},{	baseURL:window.getClientObj().ioConf.url,
-							authorization:'none',
-							formatData:true}).then((data)=>{
-								util.setCookie('ioAuthorization',"Bearer "+data.access_token,1);
-						});
+						if(util.getLocalStorage('GBConf').ioConf.models.type==='v8'){
+							fetch({ 
+									url: '/Token',
+									method: 'post',
+									data:{
+											client_id:window.getClientObj().ioConf.clientId,
+											client_secret:window.getClientObj().ioConf.clientSecret,
+											grant_type:'client_credentials'
+										}
+								},{	baseURL:window.getClientObj().ioConf.url,
+									authorization:'none',
+									formatData:true}).then((data)=>{
+										util.setCookie('ioAuthorization',"Bearer "+data.access_token,1);
+								});
+							}
 					}
 				},
 				...mapActions(['getLoginSatus','getToken']),
@@ -185,7 +178,6 @@ export default {
 			 mounted(){
 				 this._initlogin();
 				 this._getGlobConf();
-				 //this._requestGetMenuAppList();
 			 }
 	}
 </script>

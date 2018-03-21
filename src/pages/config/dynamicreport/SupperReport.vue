@@ -5,7 +5,8 @@
         :baseInfoConf="baseInfoConf"
         :filterConf="filterConf"
         :tableInfoConf="tableInfoConf"
-        :functionConf="functionConf">
+        :functionConf="functionConf"
+        :formConf="formConf">
  </yl-dynamicreport>
    
 
@@ -36,6 +37,9 @@ export default {
                 },
                 functionConf:function(){
                     return JSON.parse(this.mConfigs.functionConf,util.dealFunction).functionConf;
+                },
+                formConf:function(){
+                    return JSON.parse(this.mConfigs.formConf,util.dealFunction).formConf;
                 },
                 globalConf:{
                     get(){
