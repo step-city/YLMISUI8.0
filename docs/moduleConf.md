@@ -1069,7 +1069,7 @@ form表单分两种类型：
 
 注意： 不要在formModel中初始化值，应该在控件的init方法中初始化。
 
-#### 单表的formModel结构
+##### 单表的formModel结构
 
 ```json
     "formModel": {
@@ -1141,21 +1141,6 @@ form表单分两种类型：
 
 > 该对象中配置拦截方法，注意：拦截方法提供了form表单的vue实例。
 
-1. mounted
-
-参数：_this (当前的vue实例)
-form表单的mounted事件,vue实例的mounted阶段执行
-
-
-2. beforeDataRender
-
-参数：_this (当前的vue实例)
-在`beforeDataRender`中可以对一些表单数据在用户未操作之前的处理。
-
-3. beforeSubmit
-
-参数：_this (当前的vue实例)
-在`beforeSubmit`中执行submit之前业务逻辑。
 
 ```JSON
  "InterceptEvent": {
@@ -1169,12 +1154,13 @@ form表单的mounted事件,vue实例的mounted阶段执行
       },
       "beforeSubmit": {
         "isOn": true,
-        "event": "function(_this){_this.formModel.order.isAudit=false;if(_this.formModel.items.length>0){_this.formModel.items.map(function(i,index){i.sortCode=index;})}}"
+        "event": "function(_this){}"
+      },
+       "afterSubmit": {
+        "isOn": true,
+        "event": "function(_this){}"
       }
 ```
-
-
-
 
 
 #### WatchEvent对象
@@ -1188,6 +1174,8 @@ form表单的mounted事件,vue实例的mounted阶段执行
     }
 ```
 ---
+
+
 ### 业务模块实例预留变量
     
 #### 预留属性
@@ -1207,10 +1195,6 @@ form表单的mounted事件,vue实例的mounted阶段执行
 ##### `funBtnConf`
 
 `funBtnConf`对象为模块的功能按钮对象数组。
-
-##### `globalFunObject`
-
-`globalFunObject`内部封装了全局函数中用到的方法。
 
 ##### `fetchObject`
 

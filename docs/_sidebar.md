@@ -10,7 +10,6 @@
 - [渲染器](/renderComs)
 - [模块配置说明](/moduleConf)
 - [报表配置说明](/reportConf)
-- [综合模块配置说明](/complexContainer)
 - [前端配置开发规范](/frontRules)   
 - [后台API调用说明](/apidescription)
 - [MarkDown语法](/markDown)   

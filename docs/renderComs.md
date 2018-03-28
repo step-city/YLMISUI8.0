@@ -1336,7 +1336,332 @@ switch开关配置
 
 ```
 ---
+
+
+
 ### containerComs
 
 ** 说明：**  `containerComs`容器渲染器根据配置渲染具体容器。
 
+
+##### `querycontainer`
+
+**业务模块容器配置**
+
+一级页面配置
+
+```json
+  {
+      "baseInfo":{},
+      "apiConf":{},
+      "filterConf":{},
+      "tableInfoConf":{},
+      "functionConf":{},
+      "formConf":{}
+  }
+
+```
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"querycontainer",
+      "elmentConfig":{
+          "baseInfo":{},
+          "apiConf":{},
+          "filterConf":{},
+          "tableInfoConf":{},
+          "functionConf":{},
+          "formConf":{},
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option,outParams){}"
+        }
+      }
+    },
+    "outParams":{},  //外部参数
+  }
+
+```
+---
+
+##### `querycontainerR`
+
+**查询数据容器配置**
+
+一级页面配置
+
+```json
+  {
+      "baseInfo":{},
+      "apiConf":{},
+      "filterConf":{},
+      "tableInfoConf":{},
+      "functionConf":{}
+  }
+
+```
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"querycontainerR",
+      "elmentConfig":{
+          "baseInfo":{},
+          "apiConf":{},
+          "filterConf":{},
+          "tableInfoConf":{},
+          "functionConf":{},
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option,outParams){}"
+        }
+      }
+    },
+    "outParams":{},  //外部参数
+  }
+
+```
+---
+
+
+##### `queryChart`
+
+**图表展示容器配置**
+
+一级页面配置
+
+```json
+  {
+      "baseInfo":{},
+      "apiConf":{},
+      "filterConf":{},
+      "tableInfoConf":{},
+      "functionConf":{}
+  }
+
+```
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"queryChart",
+      "elmentConfig":{
+          "baseInfo":{},
+          "apiConf":{},
+          "filterConf":{},
+          "tableInfoConf":{},
+          "functionConf":{},
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option,outParams){}"
+        }
+      }
+    },
+    "outParams":{},  //外部参数
+  }
+
+```
+---
+
+
+
+##### `htmlContainer`
+
+**html渲染展示容器配置**
+
+一级页面配置
+
+```json
+  {
+      "baseInfo":{},
+      "apiConf":{},
+      "filterConf":{},
+      "tableInfoConf":{},
+      "functionConf":{}
+  }
+
+```
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"htmlContainer",
+      "elmentConfig":{
+          "baseInfo":{},
+          "apiConf":{},
+          "filterConf":{},
+          "tableInfoConf":{},
+          "functionConf":{},
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option,outParams){}"
+        }
+      }
+    },
+    "outParams":{},  //外部参数
+  }
+
+```
+---
+
+
+
+##### `complexContainer`
+
+**html渲染展示容器配置**
+
+一级页面配置
+
+```json
+  {
+      "baseInfo":{},
+      "tableInfoConf":{}
+  }
+
+```
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"complexContainer",
+      "elmentConfig":{
+          "tableInfoConf":{},
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option,outParams){}"
+        }
+      }
+    },
+    "outParams":{},  //外部参数
+  }
+
+```
+---
+
+
+
+##### `htmlRaw`
+
+**html字符串渲染**
+
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"htmlRaw",
+      "elmentConfig":{
+          "content":{},
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option){}"
+        }
+      }
+    }
+  }
+
+```
+---
+
+
+
+
+##### `commemt`
+
+**评论插件**
+
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"commemt",
+      "elmentConfig":{
+          "dataId":"",
+          "commentModule":"",
+          "maxContent":"",
+          "pageSize":"",
+          "style":{}
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option){}"
+        }
+      }
+    }
+  }
+
+```
+---
+
+
+##### `statisticsBlock`
+ 
+
+ **数据显示块**
+
+
+二级页面配置
+
+```json
+  {
+    "option":{
+      "type":"statisticsBlock",
+      "elmentConfig":{
+          "backgroudColor":"",
+          "theme":"",
+          "duration":"",
+          "number":"",
+          "unit":"",
+          "title":"",
+          "linkUrl":"",
+          "icon":"",
+          "style":{}
+      },
+      "eventConf":{
+        "isOn":true,
+        "event":"function(_this){}"
+      },
+      "InterceptEvent":{
+        "init":{  //初始化
+          "isOn":true,
+          "event":"function(_this,option){}"
+        }
+      }
+    }
+  }
+
+```
+---

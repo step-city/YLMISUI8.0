@@ -149,7 +149,8 @@ export default {
                         option:{}
                    },
                funBtnConf:{},
-               emptyContent:'<div style="width:100%;height:200px;line-height:200px;text-align:center">暂无数据</div>'
+               listenEvent:{},
+               emptyContent:'<div style="width:100%;height:200px;line-height:200px;text-align:center;font-size:12px;">暂无数据</div>'
             }
     },
     props:{
@@ -276,7 +277,8 @@ export default {
                     }).catch(function(error){
                          _this.Loading=false;
                         _this.$message.error('获取数据失败！');
-                    });
+            });
+
         },
         _funcState(){
             let _this=this;
@@ -374,25 +376,25 @@ export default {
                 }  
             }
         },
-        _tableSlotEvent(row,item){
-            let _this=this;
-                    let eventConf=item.eventConf;
-                    if(eventConf!=undefined){
-                        if(eventConf.isOn){
-                            if(eventConf.click!=undefined){
-                                //对配置内容进行拦截处理
-                               if(item.isContainer){
-                                    let conf=_this.tableInfoConf.itemConf[item.name];
-                                    eventConf.click(row,item.name,_this,conf);
-                                    this.itemConf=conf;
-                                    this.itemFormVisible=true;
-                               }else{
-                                   eventConf.click(row,item.name,_this);
-                               }
-                            }
-                        }
-                    }
-        },
+        // _tableSlotEvent(row,item){
+        //     let _this=this;
+        //             let eventConf=item.eventConf;
+        //             if(eventConf!=undefined){
+        //                 if(eventConf.isOn){
+        //                     if(eventConf.click!=undefined){
+        //                         //对配置内容进行拦截处理
+        //                        if(item.isContainer){
+        //                             let conf=_this.tableInfoConf.itemConf[item.name];
+        //                             eventConf.click(row,item.name,_this,conf);
+        //                             this.itemConf=conf;
+        //                             this.itemFormVisible=true;
+        //                        }else{
+        //                            eventConf.click(row,item.name,_this);
+        //                        }
+        //                     }
+        //                 }
+        //             }
+        // },
         _inputArrInit(){
             this.filterConf.inputArr.forEach(item=>{
                 let _this=this;
@@ -467,8 +469,25 @@ export default {
             this._mounted();
             //一些初始化逻辑
             this._loadData();
+            //一些初始化逻辑
+            if(this.filterConf.loadListen!==undefined){
+                if(this.filterConf.loadListen.isOn){
+                        this.listenEvent=setInterval(()=>{
+                             this._reload();
+                        },this.filterConf.loadListen.Num);  
+                 }
+            }
         },
     },
+    beforeDestroy() {
+      //  this.$refs.dbComponent.disconnectWBalance();
+        //清除监听
+        if(this.filterConf.loadListen!==undefined){
+                 if(this.filterConf.loadListen.isOn){
+                     window.clearInterval(this.listenEvent);
+                 }
+            } 
+   },
     components:{
         },
     created(){
@@ -487,7 +506,6 @@ export default {
             this._reload();
         },
     }
-   
 }
 </script>
 

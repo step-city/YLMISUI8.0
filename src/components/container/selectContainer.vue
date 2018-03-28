@@ -225,7 +225,8 @@ export default {
                 this._funcState();
         },
         toggleRowSelection (row) {
-            this.$refs.selecttable.toggleRowSelection(row)
+            this.$refs.selecttable.toggleRowSelection(row);
+            this._rowclick(row);
         },
         _functionClick(item){
             let _this=this;
@@ -366,6 +367,17 @@ export default {
                     if(eventConf!=undefined){
                         if(eventConf.isOn){
                             eventConf.event(_this);
+                        }
+                    }
+                }
+        },
+         _rowclick(currentrows){
+                let _this=this;
+                if(this.tableInfoConf.InterceptEvent!=undefined){
+                    let eventConf=this.tableInfoConf.InterceptEvent.rowclick;
+                    if(eventConf!=undefined){
+                        if(eventConf.isOn){
+                            eventConf.event(_this,currentrows);
                         }
                     }
                 }

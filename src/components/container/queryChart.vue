@@ -30,14 +30,26 @@
                                                     @method2="_method2">
                                                  </yl-rendercoms>
                                         </el-form-item>
-                                        <el-form-item class="form-content-vertical" >
+                                         <el-form-item class="form-content-vertical" v-if="functionConf.searchBtn">
                                               <el-button 
-                                                    v-show="true"
-                                                    :disabled="false"  
-                                                    type="primary" 
-                                                    size="small"
-                                                    @click="_reload()"> 
-                                                   <i class="icon-search2"></i>查询 
+                                                    v-show="functionConf.searchBtn.isShow"
+                                                    :disabled="functionConf.searchBtn.disabled"  
+                                                    :type="functionConf.searchBtn.type" 
+                                                    :size="functionConf.searchBtn.size" 
+                                                    @click="_functionClick(functionConf.searchBtn)"> 
+                                                    <i :class="functionConf.searchBtn.icon"></i>
+                                                    {{functionConf.searchBtn.text}}  
+                                               </el-button>
+                                         </el-form-item>
+                                         <el-form-item class="form-content-vertical" v-if="functionConf.excelBtn">
+                                              <el-button 
+                                                    v-show="functionConf.excelBtn.isShow"
+                                                    :disabled="functionConf.excelBtn.disabled"  
+                                                    :type="functionConf.excelBtn.type" 
+                                                    :size="functionConf.excelBtn.size" 
+                                                    @click="_functionClick(functionConf.excelBtn)"> 
+                                                    <i :class="functionConf.excelBtn.icon"></i>
+                                                    {{functionConf.excelBtn.text}}  
                                                </el-button>
                                          </el-form-item>
                                 </yl-toolbar>
@@ -83,6 +95,25 @@
                                 </yl-echarts>
                         </div>
                     </yl-layout> 
+
+            <!--动态容器-->
+                <el-dialog ref="dynamicDialog" 
+                    v-model="itemFormVisible" 
+                    :close-on-click-modal="true"
+                    lock-scroll
+                    :modal-append-to-body="false"
+                    :title="itemConf.dialogConf.title" 
+                    :size="itemConf.dialogConf.size"
+                    :top="itemConf.dialogConf.top">
+                     <yl-containercoms     
+                            v-if="itemFormVisible"
+                            :option="itemConf.option"
+                            :outParams="itemConf.outParams"
+                            @init="_initContainerComs"
+                    > 
+                    </yl-containercoms>
+                </el-dialog>
+
                </div>  
                 
       </yl-columnlay>
@@ -122,7 +153,8 @@ export default {
                         option:{}
                    },
                funBtnConf:{},
-               options:{}
+               options:{},
+               listenEvent:{}
             }
     },
     props:{
@@ -236,6 +268,7 @@ export default {
                         if(data.success){
                             if(data.result.resultType===0){
                                   this.extensionObj.table=data.result.items;
+                                  console.log(data.result.items)
                                   this._afterLoad();
                             }
                         }
@@ -342,26 +375,26 @@ export default {
                 }  
             }
         },
-        _tableSlotEvent(row,item){
-            let _this=this;
-                    let eventConf=item.eventConf;
-                    if(eventConf!=undefined){
-                        if(eventConf.isOn){
-                            if(eventConf.click!=undefined){
-                                //对配置内容进行拦截处理
-                               if(item.isContainer){
-                                    let conf=_this.tableInfoConf.itemConf[item.name];
-                                    eventConf.click(row,item.name,_this,conf);
-                                    this.itemConf=conf;
-                                    this.itemFormVisible=true;
-                               }else{
-                                   eventConf.click(row,item.name,_this);
-                               }
-                            }
-                        }
-                    }
+        // _tableSlotEvent(row,item){
+        //     let _this=this;
+        //             let eventConf=item.eventConf;
+        //             if(eventConf!=undefined){
+        //                 if(eventConf.isOn){
+        //                     if(eventConf.click!=undefined){
+        //                         //对配置内容进行拦截处理
+        //                        if(item.isContainer){
+        //                             let conf=_this.tableInfoConf.itemConf[item.name];
+        //                             eventConf.click(row,item.name,_this,conf);
+        //                             this.itemConf=conf;
+        //                             this.itemFormVisible=true;
+        //                        }else{
+        //                            eventConf.click(row,item.name,_this);
+        //                        }
+        //                     }
+        //                 }
+        //             }
 
-        },
+        // },
          _inputArrInit(){
             this.filterConf.inputArr.forEach(item=>{
                 let _this=this;
@@ -431,12 +464,19 @@ export default {
         },
         //---------------
         init(){
-            
             this._inputArrInit();
             //初始化拦截
             this._mounted();
-            //一些初始化逻辑
+            //加载数据
             this._loadData();
+              //一些初始化逻辑
+            if(this.filterConf.loadListen!==undefined){
+                if(this.filterConf.loadListen.isOn){
+                        this.listenEvent=setInterval(()=>{
+                             this._reload();
+                        },this.filterConf.loadListen.Num);  
+                 }
+            }
         },
     },
     created(){
@@ -450,7 +490,16 @@ export default {
     mounted(){
         this.init();  
     },
-     components: {
+    beforeDestroy() {
+      //  this.$refs.dbComponent.disconnectWBalance();
+        //清除监听
+        if(this.filterConf.loadListen!==undefined){
+                 if(this.filterConf.loadListen.isOn){
+                     window.clearInterval(this.listenEvent);
+                 }
+            } 
+   },
+   components: {
         'yl-echarts': ECharts
     },
     watch:{

@@ -91,9 +91,12 @@
                              <yl-table ref="selecttable"
                                     @reload="_reload"
                                     @current-change="_currentChange" 
+                                    @selection-change="_selectionChange"
+                                    @row-click="toggleRowSelection"
                                     :configs="tableInfoConf" 
                                     :input="mainInput.inputModel"
                                     :tableloading="mainTableLoading" 
+                                    :pagination="tableInfoConf.pagination" 
                                     >
                                     <template :slot="item.name" scope="scope" v-for="(item,index) in tableInfoConf.solSlotConf" > 
                                             <yl-tableSlotComs 
